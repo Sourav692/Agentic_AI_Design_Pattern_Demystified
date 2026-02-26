@@ -1,0 +1,97 @@
+---
+description: >
+globs: *.ipynb
+alwaysApply: false
+---
+# Notebook Formatting & Education-Ready Style Guide
+
+## Goals
+Transform raw or exploratory notebooks into clean, well-documented, 
+education-grade notebooks that a reader can follow without prior context.
+
+---
+
+## 1. Markdown Cells
+
+- **Begin every major section** with a Markdown cell that includes:
+  - A clear `##` or `###` heading describing the section's purpose
+  - A 1–3 sentence explanation of *what* this section does and *why* it matters
+- Use **bold** for key terms being introduced for the first time
+- Use `inline code` when referencing variable names, functions, or library APIs
+- Add a **"What you'll learn"** callout at the top of the notebook using a blockquote:
+  > **What you'll learn:** ...
+- Close multi-step sections with a brief **"Key Takeaway"** markdown cell summarizing the outcome
+
+---
+
+## 2. Python Code Cells
+
+- Add a **top-of-cell comment block** for every non-trivial code cell:
+  ```python
+  # ─────────────────────────────────────────────
+  # Purpose : <one-line description of what this cell does>
+  # Input   : <key variables or data it depends on>
+  # Output  : <what it produces or modifies>
+  # ─────────────────────────────────────────────
+  ```
+- Use **inline comments** (`#`) on lines that contain non-obvious logic, 
+  transformations, or magic numbers — not on self-explanatory lines
+- Group logically related lines with a single-line `# --- <label> ---` separator
+- Avoid commenting the obvious (e.g., `# import pandas` on `import pandas as pd`)
+
+---
+
+## 3. Deduplication Rules
+
+- **Identify repeated cells**: If two or more cells perform the same operation 
+  (e.g., re-importing libraries, re-defining the same variable, repeated print statements),
+  retain only the **first canonical occurrence**
+- Comment out (do not delete) the duplicate cells using `# [DUPLICATE — see cell above]`
+  at the top so the notebook history is preserved
+- If a duplicate exists because of an incremental update (e.g., variable redefined 
+  with a slight change), consolidate into a **single parameterized cell** with a comment 
+  noting the evolution
+
+---
+
+## 4. Cell Merging Guidelines
+
+Merge cells **only when all of the following are true**:
+- They belong to the **same logical operation** (e.g., load → validate → preview data)
+- Merging does **not exceed ~30–40 lines** in the resulting cell
+- Each merged block is separated by a `# --- <step label> ---` comment inside the cell
+- The merged cell remains **runnable as a single unit** without side effects
+
+**Do not merge** cells that:
+- Produce independent outputs (charts, tables, printed results) — keep these separate 
+  for inline display
+- Belong to different conceptual sections
+- Contain error-prone or experimental code that benefits from isolated execution
+
+---
+
+## 5. Cell Ordering & Flow
+
+- Enforce the **top-to-bottom execution contract**: the notebook must be fully 
+  reproducible by running `Kernel → Restart & Run All`
+- Imports and configuration always go in the **first 1–2 cells**
+- Follow this canonical section order where applicable:
+  1. Imports & Configuration
+  2. Data Loading
+  3. Exploratory Data Analysis (EDA)
+  4. Preprocessing / Feature Engineering
+  5. Modeling / Core Logic
+  6. Evaluation / Results
+  7. Conclusion & Next Steps
+
+---
+
+## 6. Final Checklist Before Saving
+
+- [ ] Every section has a descriptive Markdown header
+- [ ] No cell is undocumented (at minimum a one-line purpose comment)
+- [ ] No duplicate or redundant cells without a `# [DUPLICATE]` annotation
+- [ ] All merged cells have internal `# ---` section separators
+- [ ] Notebook runs clean from top to bottom with no stale state dependencies
+- [ ] Variable names are descriptive — rename single-letter or cryptic names with a comment if renaming is risky
+```
