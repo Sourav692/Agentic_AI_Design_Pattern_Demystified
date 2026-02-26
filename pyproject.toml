@@ -75,7 +75,6 @@ dependencies = [
     "pyppeteer",
     "pygraphviz>=1.14",
 ]
-
 [project.optional-dependencies]
 dev = [
     "pytest>=9.0.2",
